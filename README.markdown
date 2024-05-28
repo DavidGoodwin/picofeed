@@ -1,6 +1,33 @@
 PicoFeed
 ========
 
+Fork Notes
+----------
+
+Fork of : https://github.com/aaronpk/picofeed with ....
+
+ * 2024/05/28 - add PHP8.2 support (remove PHP deprecation warnings etc), tentatively tag as v1.0.0
+
+Use :
+
+add e.g.
+```
+ ...
+  "repositories" : [
+        {
+            "type": "vcs",
+            "url" : "git@github.com:DavidGoodwin/picofeed.git"
+        }
+   ],
+   ...
+```
+
+to your composer.json and then e.g. ` "p3k/picofeed": "^1.0" `
+
+
+Original Readme
+---------------
+
 PicoFeed was originally developed for [Miniflux](http://miniflux.net), a minimalist and open source news reader.
 
 [![Build Status](https://travis-ci.org/aaronpk/picoFeed.svg?branch=master)](https://travis-ci.org/aaronpk/picofeed)
