@@ -9,58 +9,58 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
     public function testBadInput()
     {
         $parser = new Rss20('boo');
-        $this->expectException(PicoFeed\Parser\MalformedXmlException::class);
+        $this->expectException(\PicoFeed\Parser\MalformedXmlException::class);
         $parser->execute();
     }
 
     public function testGetItemsTree()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertCount(4, $feed->items);
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_feed.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_feed.xml'));
         $feed = $parser->execute();
         $this->assertEquals(array(), $feed->items);
     }
 
     public function testFindFeedTitle()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('литература на   русском языке,  либо написанная русскими авторами', $feed->getTitle());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_fallback_on_invalid_feed_values.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_fallback_on_invalid_feed_values.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://en.wikipedia.org/wiki/Category:Russian-language_literature', $feed->getTitle());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_channel.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_channel.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getTitle());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_feed.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_feed.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getTitle());
     }
 
     public function testFindFeedDescription()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals("Зародилась во второй половине   X века, однако до XIX века,\nкогда начался её «золотой век», была практически неизвестна\nв мире.", $feed->getDescription());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_channel.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_channel.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getDescription());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_feed.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_feed.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getDescription());
     }
 
     public function testFindFeedLogo()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://ru.wikipedia.org/static/images/project-logos/ruwiki.png', $feed->getLogo());
 
@@ -68,21 +68,21 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getLogo());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_feed.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_feed.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getLogo());
     }
 
     public function testFindFeedIcon()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getIcon());
     }
 
     public function testFindFeedUrl()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->getFeedUrl());
     }
@@ -171,7 +171,7 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
 
     public function testFindItemUrl()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://en.wikipedia.org/wiki/War_and_Peace', $feed->items[0]->getUrl()); // <rss:link>
         $this->assertEquals('https://en.wikipedia.org/wiki/Crime_and_Punishment', $feed->items[1]->getUrl()); // <atom:link>
@@ -179,45 +179,45 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('https://guid.wikipedia.org/wiki/A_Hero_of_Our_Time', $feed->items[3]->getUrl()); // <guid>
 
         // relative urls
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_extra.xml'), '', 'https://feeds.wikipedia.org/category/Russian-language_literature.xml');
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_extra.xml'), '', 'https://feeds.wikipedia.org/category/Russian-language_literature.xml');
         $feed = $parser->execute();
         $this->assertEquals('https://feeds.wikipedia.org/wiki/War_and_Peace', $feed->items[0]->getUrl()); // <rss:link>
         $this->assertEquals('https://feeds.wikipedia.org/wiki/Crime_and_Punishment', $feed->items[1]->getUrl()); // <atom:link>
         $this->assertEquals('https://feeds.wikipedia.org/wiki/Doctor_Zhivago_(novel)', $feed->items[2]->getUrl()); // <feedburner:origLink>
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_element_preference.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_element_preference.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://en.wikipedia.org/wiki/War_and_Peace', $feed->items[0]->getUrl()); // <feedburner:origLink> is preferred over <rss:link>, <atom:link>, <guid>
         $this->assertEquals('https://en.wikipedia.org/wiki/Crime_and_Punishment', $feed->items[1]->getUrl()); // <rss:link> is preferred over <atom:link>, <guid>
         $this->assertEquals('https://en.wikipedia.org/wiki/Doctor_Zhivago_(novel)', $feed->items[2]->getUrl()); // <atom:link> is preferred over <guid>
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_fallback_on_invalid_item_values.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_fallback_on_invalid_item_values.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->items[0]->getUrl()); // <guid> is invalid URI
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_item.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_item.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->items[0]->getUrl());
     }
 
     public function testFindItemTitle()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('Война  и мир', $feed->items[0]->getTitle());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_fallback_on_invalid_item_values.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_fallback_on_invalid_item_values.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://en.wikipedia.org/wiki/Doctor_Zhivago_(novel)', $feed->items[2]->getTitle());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_item.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_item.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->items[0]->getTitle());
     }
 
     public function testFindItemDate()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals(1433451720, $feed->items[0]->getDate()->getTimestamp()); // item date
         $this->assertEquals(1433451900, $feed->items[1]->getDate()->getTimestamp()); // fallback to feed date
@@ -235,12 +235,12 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
 
     public function testFindItemLanguage()
     {
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('bg', $feed->items[0]->getLanguage()); // item language
         $this->assertEquals('ru', $feed->items[1]->getLanguage()); // fallback to feed language
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_item.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_item.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->items[0]->getLanguage());
     }
@@ -261,23 +261,23 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
     {
         // items[0] === item author
         // items[1] === feed author via empty fallback (channel/managingEditor)
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('Лев  Николаевич Толсто́й', $feed->items[0]->getAuthor());
         $this->assertEquals('Вики  педии - свободной энциклопедии', $feed->items[1]->getAuthor());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_dc.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_dc.xml'));
         $feed = $parser->execute();
         $this->assertEquals('Лев  Николаевич Толсто́й', $feed->items[0]->getAuthor());
         $this->assertEquals('Вики  педии - свободной энциклопедии', $feed->items[1]->getAuthor());
 
         // <dc:creator> is preferred over <author>
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_element_preference.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_element_preference.xml'));
         $feed = $parser->execute();
         $this->assertEquals('Лев  Николаевич Толсто́й', $feed->items[0]->getAuthor());
         $this->assertEquals('Вики  педии - свободной энциклопедии', $feed->items[1]->getAuthor());
 
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20_empty_item.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20_empty_item.xml'));
         $feed = $parser->execute();
         $this->assertEquals('', $feed->items[0]->getAuthor());
     }
@@ -286,7 +286,7 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
     {
         // items[0] === <description>
         // items[1] === <content:encoded>
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ . '/../fixtures/rss_20.xml'));
         $parser->disableContentFiltering();
         $feed = $parser->execute();
         $this->assertTrue(strpos($feed->items[0]->getContent(), "В наброске  предисловия к «Войне и миру» Толстой\nписал, что в 1856 г.") === 0);
@@ -312,7 +312,7 @@ class Rss20ParserTest extends \PHPUnit\Framework\TestCase
     public function testFindItemEnclosure()
     {
         // Test tests covers the preference of <feedburner:origEnclosureLink> over <enclosure> as well
-        $parser = new Rss20(file_get_contents('tests/fixtures/rss_20.xml'));
+        $parser = new Rss20(file_get_contents(__DIR__ .'/../fixtures/rss_20.xml'));
         $feed = $parser->execute();
         $this->assertEquals('https://upload.wikimedia.org/wikipedia/commons/4/41/War-and-peace_1873.gif', $feed->items[0]->getEnclosureUrl()); // <enclosure>
         $this->assertEquals('image/gif', $feed->items[0]->getEnclosureType());

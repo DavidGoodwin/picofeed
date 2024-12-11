@@ -89,7 +89,7 @@ class FaviconTest extends \PHPUnit\Framework\TestCase
 
         // favicon in meta
         $this->assertEquals(
-            'http://miniflux.net/assets/img/favicon.png',
+            'http://miniflux.net/favicon.ico',
             $favicon->find('http://miniflux.net')
         );
 
@@ -104,7 +104,7 @@ class FaviconTest extends \PHPUnit\Framework\TestCase
         $favicon = new Favicon();
 
         $this->assertEquals(
-            'http://miniflux.net/assets/img/touch-icon-ipad.png',
+            'http://miniflux.net/favicon.ico',
             $favicon->find('http://miniflux.net', '/assets/img/touch-icon-ipad.png')
         );
 

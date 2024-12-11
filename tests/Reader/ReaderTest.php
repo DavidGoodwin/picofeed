@@ -227,19 +227,19 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
 
         $reader = new Reader();
         $client = $reader->discover('http://cabinporn.com/');
-        $this->assertEquals('http://cabinporn.com/rss', $client->getUrl());
+        $this->assertEquals('https://cabinporn.com/rss', $client->getUrl());
         $this->assertInstanceOf('PicoFeed\Parser\Rss20', $reader->getParser($client->getUrl(), $client->getContent(), $client->getEncoding()));
 
         $reader = new Reader();
         $client = $reader->discover('http://linuxfr.org/');
-        $this->assertEquals('http://linuxfr.org/news.atom', $client->getUrl());
+        $this->assertEquals('https://linuxfr.org/news.atom', $client->getUrl());
         $this->assertInstanceOf('PicoFeed\Parser\Atom', $reader->getParser($client->getUrl(), $client->getContent(), $client->getEncoding()));
     }
 
     public function testGetParserUsesHTTPEncoding()
     {
         $reader = new Reader();
-        $parser = $reader->getParser('http://blah', file_get_contents('tests/fixtures/cercle.psy.xml'), 'iso-8859-1');
+        $parser = $reader->getParser('http://blah', file_get_contents(__DIR__ . '/../fixtures/cercle.psy.xml'), 'iso-8859-1');
         $feed = $parser->execute();
         $this->assertInstanceOf('PicoFeed\Parser\Rss20', $parser);
         $this->assertNotEmpty($feed->items);
@@ -248,7 +248,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testGetParserUsesSiteURL()
     {
         $reader = new Reader();
-        $parser = $reader->getParser('http://groovehq.com/', file_get_contents('tests/fixtures/groovehq.xml'), '');
+        $parser = $reader->getParser('http://groovehq.com/', file_get_contents(__DIR__ . '/../fixtures/groovehq.xml'), '');
         $feed = $parser->execute();
         $this->assertEquals('http://groovehq.com/articles.xml', $feed->getFeedUrl());
     }
@@ -256,7 +256,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testFeedsReportedAsNotWorking()
     {
         $reader = new Reader();
-        $parser = $reader->getParser('http://blah', file_get_contents('tests/fixtures/ezrss.it'), '');
+        $parser = $reader->getParser('http://blah', file_get_contents(__DIR__ . '/../fixtures/ezrss.it'), '');
         $feed = $parser->execute();
         $this->assertNotEmpty($feed->items);
     }

@@ -29,7 +29,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     {
 
         $client = Client::getInstance();
-        $client->setUrl('https://miniflux.app//favicon.ico');
+        $client->setUrl('https://miniflux.app/favicon.ico');
         $client->enablePassthroughMode();
         ob_start();
 
@@ -37,7 +37,9 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         ob_end_clean();
         $str = ob_get_contents();
         ob_flush();
-        $this->assertEquals($str, file_get_contents('tests/fixtures/miniflux_favicon.ico'));
+
+        $this->assertNotEmpty($str, "favicon.ico should be non-empty");
+        $this->assertEquals($str, file_get_contents(__DIR__ . '/../fixtures/miniflux_favicon.ico'));
     }
 
     /**
@@ -153,7 +155,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testContentType()
     {
         $client = Client::getInstance();
-        $client->setUrl('http://miniflux.net/assets/img/favicon.png');
+        $client->setUrl('https://upload.wikimedia.org/wikipedia/commons/7/70/Example.png');
         $client->execute();
         $this->assertEquals('image/png', $client->getContentType());
 

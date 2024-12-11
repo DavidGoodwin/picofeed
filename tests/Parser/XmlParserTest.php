@@ -7,10 +7,19 @@ use PHPUnit_Framework_TestCase;
 
 class XmlParserTest extends \PHPUnit\Framework\TestCase
 {
-    public function testEmpty()
+    public function testEmptyFromDomDocument()
     {
         $this->assertFalse(XmlParser::getDomDocument(''));
+    }
+
+    public function testEmptyFromSimpleXml()
+    {
+        $this->expectException(\ValueError::class);
         $this->assertFalse(XmlParser::getSimpleXml(''));
+    }
+
+    public function testEmptyHtmlDocument()
+    {
         $this->assertNotFalse(XmlParser::getHtmlDocument(''));
     }
 
