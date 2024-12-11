@@ -7,22 +7,18 @@ Fork Notes
 Fork of : https://github.com/aaronpk/picofeed with ....
 
  * 2024/05/28 - add PHP8.2 support (remove PHP deprecation warnings etc), tentatively tag as v1.0.0
+ * 2024/12/11 - add github action, token fixes to unit tests (some fail still), moved minimum PHP variant to 7.4
 
-Use :
+Installation :
+--------------
 
-add e.g.
-```
- ...
-  "repositories" : [
-        {
-            "type": "vcs",
-            "url" : "git@github.com:DavidGoodwin/picofeed.git"
-        }
-   ],
-   ...
-```
+`composer require davidgoodwin/picofeed`
 
-to your composer.json and then e.g. ` "p3k/picofeed": "^1.0" `
+Note, package is marked to replace : 
+
+ * p3k/picofeed (which is this is forked from), and
+ * miniflux/picofeed
+
 
 
 Original Readme

@@ -1,5 +1,5 @@
 {
-    "name": "p3k/picofeed",
+    "name": "davidgoodwin/picofeed",
     "description": "Modern library to handle RSS/Atom feeds",
     "homepage": "https://github.com/aaronpk/picoFeed",
     "type": "library",
@@ -10,7 +10,8 @@
         }
     ],
     "replace": {
-        "miniflux/picofeed": "0.1.35"
+        "miniflux/picofeed": "0.1.35",
+        "p3k/picofeed": "*"
     },
     "require": {
         "php": ">=7.4",
