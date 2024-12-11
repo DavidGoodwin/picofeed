@@ -7,7 +7,7 @@ class SubscriptionListParserTest extends \PHPUnit\Framework\TestCase
 {
     public function testMalFormedFormat()
     {
-        $this->setExpectedException('PicoFeed\Parser\MalformedXmlException');
+        $this->expectException(\PicoFeed\Parser\MalformedXmlException::class);
         SubscriptionListParser::create('foobar')->parse();
     }
 
