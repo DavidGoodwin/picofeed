@@ -1,7 +1,7 @@
 {
-    "name": "davidgoodwin/picofeed",
-    "description": "Modern library to handle RSS/Atom feeds",
-    "homepage": "https://github.com/aaronpk/picoFeed",
+    "name": "orlo/picofeed",
+    "description": "library to handle RSS/Atom feeds",
+    "homepage": "https://github.com/orlo/picofeed",
     "type": "library",
     "license": "MIT",
     "authors": [
