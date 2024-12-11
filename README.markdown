@@ -12,7 +12,7 @@ Fork of : https://github.com/aaronpk/picofeed with ....
 Installation :
 --------------
 
-`composer require davidgoodwin/picofeed`
+`composer require orlo/picofeed`
 
 Note, package is marked to replace : 
 
